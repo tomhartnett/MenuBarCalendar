@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MonthCalendar: View {
+    @EnvironmentObject var appContext: AppContext
+
     @State private var model = Model(Date())
 
     let rowHeight: CGFloat = 25
@@ -20,17 +22,19 @@ struct MonthCalendar: View {
                 }, label: {
                     Image(systemName: "chevron.left")
                 })
-                .padding(.trailing)
+
+                Spacer()
 
                 Text(model.title)
                     .font(.title)
+
+                Spacer()
 
                 Button(action: {
                     changeMonth(1)
                 }, label: {
                     Image(systemName: "chevron.right")
                 })
-                .padding(.leading)
             }
             .padding(.top)
 
@@ -55,13 +59,17 @@ struct MonthCalendar: View {
 
                             Text("\(day.dayOfMonth)")
                                 .frame(maxWidth: .infinity)
-                                .foregroundColor(day.isInMonth ? day.isToday ? .white : .primary : .secondary)
+                                .foregroundColor(day.isInMonth ? day.isToday ? Color(nsColor: .windowBackgroundColor) : .primary : .secondary)
                                 .italic(!day.isInMonth)
                         }
                     }
                 }
                 .frame(height: rowHeight)
             }
+        }
+        .onReceive(appContext.$selectedDate) { date in
+            guard date != nil else { return }
+            model = Model(date!)
         }
     }
 
@@ -158,5 +166,6 @@ extension MonthCalendar {
 struct MonthCalendar_Previews: PreviewProvider {
     static var previews: some View {
         MonthCalendar()
+            .frame(width: 300)
     }
 }

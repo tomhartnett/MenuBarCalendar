@@ -7,22 +7,33 @@
 
 import SwiftUI
 
+class AppContext: ObservableObject {
+    @Published var selectedDate: Date?
+}
+
 @main
 struct MenuBarCalendarApp: App {
+    @StateObject var appContext = AppContext()
+
     var body: some Scene {
         MenuBarExtra(content: {
-            MonthCalendar()
+            VStack(alignment: .leading) {
+                MonthCalendar()
+                    .environmentObject(appContext)
 
-            Divider()
+                Divider()
 
-            HStack {
+                Button("Today") {
+                    appContext.selectedDate = Date()
+                }
+
+                Divider()
+
                 Button("Quit") {
                     NSApplication.shared.terminate(nil)
                 }
-                .padding([.leading, .bottom])
-
-                Spacer()
             }
+            .padding([.horizontal, .bottom])
 
         }, label: {
             Image(systemName: "calendar.badge.clock")
