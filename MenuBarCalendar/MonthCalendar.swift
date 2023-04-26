@@ -131,9 +131,11 @@ extension MonthCalendar {
         init(_ date: Date) {
             self.date = date
 
+            // TODO: avoid force-unwrapping of dates.
             let monthInterval = Calendar.current.dateInterval(of: .month, for: date)!
             let firstWeek = Calendar.current.dateInterval(of: .weekOfYear, for: monthInterval.start)!
-            let lastWeek = Calendar.current.dateInterval(of: .weekOfYear, for: monthInterval.end.addingTimeInterval(-1))!
+            let firstDayOfLastWeek = Calendar.current.date(byAdding: .weekOfYear, value: 5, to: firstWeek.start)!
+            let lastWeek = Calendar.current.dateInterval(of: .weekOfYear, for: firstDayOfLastWeek)!
 
             var loopDate = firstWeek.start
             while loopDate < lastWeek.end {
