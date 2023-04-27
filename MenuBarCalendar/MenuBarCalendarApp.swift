@@ -15,6 +15,8 @@ class AppContext: ObservableObject {
 struct MenuBarCalendarApp: App {
     @StateObject var appContext = AppContext()
 
+    @State private var observer: NSKeyValueObservation?
+
     var body: some Scene {
         MenuBarExtra(content: {
             VStack(alignment: .leading) {
@@ -34,6 +36,14 @@ struct MenuBarCalendarApp: App {
                 }
             }
             .padding([.horizontal, .bottom])
+            .onAppear {
+                // Workaround for `@Environment(\.scenePhase)` not working with `MenuBarExtra`.
+                observer = NSApplication.shared.observe(\.keyWindow) { _, _ in
+                    if NSApplication.shared.keyWindow != nil {
+                        appContext.selectedDate = Date()
+                    }
+                }
+            }
 
         }, label: {
             Image(systemName: "calendar.badge.clock")
