@@ -25,7 +25,9 @@ final class MonthViewModel: ObservableObject {
 
     var selectedDate = Date() {
         didSet {
-            computeMonth()
+            if selectedDate != oldValue {
+                computeMonth()
+            }
         }
     }
 
@@ -42,10 +44,6 @@ final class MonthViewModel: ObservableObject {
 
     private var helpTask: AnyCancellable?
 
-    init() {
-        computeMonth()
-    }
-
     func changeMonth(_ increment: Int) {
         let dateInterval = Calendar.current.dateInterval(of: .month, for: selectedDate)!
         let newDate = Calendar.current.date(byAdding: .month, value: increment, to: dateInterval.start)!
@@ -53,6 +51,8 @@ final class MonthViewModel: ObservableObject {
     }
 
     func onHover(_ over: Bool, date: Date) {
+        helpTask?.cancel()
+
         if over {
             helpTask = Just(date)
                 .delay(for: 1, scheduler: DispatchQueue.main)
@@ -61,7 +61,6 @@ final class MonthViewModel: ObservableObject {
                     self.helpText = self.relativeFormatter.localizedString(for: $0, relativeTo: Date())
                 })
         } else {
-            helpTask?.cancel()
             helpText = ""
         }
     }
