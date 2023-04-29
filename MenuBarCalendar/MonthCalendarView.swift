@@ -60,6 +60,7 @@ struct MonthCalendarView: View {
                             Text("\(day.dayOfMonth)")
                                 .frame(maxWidth: .infinity)
                                 .foregroundColor(day.isInMonth ? day.isToday ? Color(nsColor: .windowBackgroundColor) : .primary : .secondary)
+                                .fontWeight(day.isInMonth ? .medium : .regular)
                                 .italic(!day.isInMonth)
                                 .help(day.helpText)
                         }

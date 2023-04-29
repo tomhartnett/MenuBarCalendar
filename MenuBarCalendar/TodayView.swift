@@ -19,7 +19,6 @@ struct TodayView: View {
             })
 
             Text(context.todayDisplayText)
-                .foregroundColor(.secondary)
                 .fontWeight(isHoverOver ? .medium : .regular)
                 .italic()
         }
