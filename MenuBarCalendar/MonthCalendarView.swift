@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct MonthCalendar: View {
-    @EnvironmentObject var appContext: AppContext
+struct MonthCalendarView: View {
+    @EnvironmentObject var context: AppContext
 
     @StateObject private var viewModel = MonthViewModel()
 
@@ -68,7 +68,7 @@ struct MonthCalendar: View {
                 .frame(height: rowHeight)
             }
         }
-        .onReceive(appContext.$selectedDate) { date in
+        .onReceive(context.$selectedDate) { date in
             guard date != nil else { return }
             viewModel.selectedDate = date!
         }
@@ -77,7 +77,7 @@ struct MonthCalendar: View {
 
 struct MonthCalendar_Previews: PreviewProvider {
     static var previews: some View {
-        MonthCalendar()
+        MonthCalendarView()
             .frame(width: 300)
     }
 }

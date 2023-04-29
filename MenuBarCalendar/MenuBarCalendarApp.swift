@@ -7,27 +7,22 @@
 
 import SwiftUI
 
-class AppContext: ObservableObject {
-    @Published var selectedDate: Date?
-}
-
 @main
 struct MenuBarCalendarApp: App {
-    @StateObject var appContext = AppContext()
+    @StateObject var context = AppContext()
 
     @State private var observer: NSKeyValueObservation?
 
     var body: some Scene {
         MenuBarExtra(content: {
             VStack(alignment: .leading) {
-                MonthCalendar()
-                    .environmentObject(appContext)
+                MonthCalendarView()
+                    .environmentObject(context)
 
                 Divider()
 
-                Button("Today") {
-                    appContext.selectedDate = Date()
-                }
+                TodayView()
+                    .environmentObject(context)
 
                 Divider()
 
@@ -40,7 +35,7 @@ struct MenuBarCalendarApp: App {
                 // Workaround for `@Environment(\.scenePhase)` not working with `MenuBarExtra`.
                 observer = NSApplication.shared.observe(\.keyWindow) { _, _ in
                     if NSApplication.shared.keyWindow != nil {
-                        appContext.selectedDate = Date()
+                        context.today()
                     }
                 }
             }

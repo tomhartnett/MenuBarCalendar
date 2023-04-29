@@ -7,20 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E224F9FB29FD8C120058D94F /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E224F9FA29FD8C120058D94F /* TodayView.swift */; };
+		E224F9FD29FDA7040058D94F /* AppContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E224F9FC29FDA7040058D94F /* AppContext.swift */; };
 		E22B519329F481960063AD8A /* MenuBarCalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B519229F481960063AD8A /* MenuBarCalendarApp.swift */; };
 		E22B519729F481960063AD8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E22B519629F481960063AD8A /* Assets.xcassets */; };
 		E22B519A29F481960063AD8A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E22B519929F481960063AD8A /* Preview Assets.xcassets */; };
-		E22B51A229F485E40063AD8A /* MonthCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B51A129F485E40063AD8A /* MonthCalendar.swift */; };
+		E22B51A229F485E40063AD8A /* MonthCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B51A129F485E40063AD8A /* MonthCalendarView.swift */; };
 		E2FAAE0329F954D20005D40A /* MonthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAAE0229F954D20005D40A /* MonthViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E224F9FA29FD8C120058D94F /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
+		E224F9FC29FDA7040058D94F /* AppContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContext.swift; sourceTree = "<group>"; };
 		E22B518F29F481960063AD8A /* MenuBarCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenuBarCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E22B519229F481960063AD8A /* MenuBarCalendarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarCalendarApp.swift; sourceTree = "<group>"; };
 		E22B519629F481960063AD8A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E22B519929F481960063AD8A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E22B519B29F481960063AD8A /* MenuBarCalendar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MenuBarCalendar.entitlements; sourceTree = "<group>"; };
-		E22B51A129F485E40063AD8A /* MonthCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCalendar.swift; sourceTree = "<group>"; };
+		E22B51A129F485E40063AD8A /* MonthCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCalendarView.swift; sourceTree = "<group>"; };
 		E2FAAE0229F954D20005D40A /* MonthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -54,9 +58,11 @@
 		E22B519129F481960063AD8A /* MenuBarCalendar */ = {
 			isa = PBXGroup;
 			children = (
+				E224F9FC29FDA7040058D94F /* AppContext.swift */,
 				E22B519229F481960063AD8A /* MenuBarCalendarApp.swift */,
-				E22B51A129F485E40063AD8A /* MonthCalendar.swift */,
+				E22B51A129F485E40063AD8A /* MonthCalendarView.swift */,
 				E2FAAE0229F954D20005D40A /* MonthViewModel.swift */,
+				E224F9FA29FD8C120058D94F /* TodayView.swift */,
 				E22B519629F481960063AD8A /* Assets.xcassets */,
 				E22B519B29F481960063AD8A /* MenuBarCalendar.entitlements */,
 				E22B519829F481960063AD8A /* Preview Content */,
@@ -142,8 +148,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E22B51A229F485E40063AD8A /* MonthCalendar.swift in Sources */,
+				E22B51A229F485E40063AD8A /* MonthCalendarView.swift in Sources */,
+				E224F9FD29FDA7040058D94F /* AppContext.swift in Sources */,
 				E2FAAE0329F954D20005D40A /* MonthViewModel.swift in Sources */,
+				E224F9FB29FD8C120058D94F /* TodayView.swift in Sources */,
 				E22B519329F481960063AD8A /* MenuBarCalendarApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
