@@ -11,7 +11,6 @@ import Foundation
 final class MonthViewModel: ObservableObject {
     @Published var title = ""
     @Published var weeks = [Week]()
-    @Published var helpText = ""
 
     let headers: [Header] = [
         .init(daySymbol: "Sun"),
@@ -42,27 +41,10 @@ final class MonthViewModel: ObservableObject {
         return formatter
     }()
 
-    private var helpTask: AnyCancellable?
-
     func changeMonth(_ increment: Int) {
         let dateInterval = Calendar.current.dateInterval(of: .month, for: selectedDate)!
         let newDate = Calendar.current.date(byAdding: .month, value: increment, to: dateInterval.start)!
         selectedDate = newDate
-    }
-
-    func onHover(_ over: Bool, date: Date) {
-        helpTask?.cancel()
-
-        if over {
-            helpTask = Just(date)
-                .delay(for: 1, scheduler: DispatchQueue.main)
-                .sink(receiveValue: { [weak self] in
-                    guard let self = self else { return }
-                    self.helpText = self.relativeFormatter.localizedString(for: $0, relativeTo: Date())
-                })
-        } else {
-            helpText = ""
-        }
     }
 
     private func computeMonth() {
@@ -82,7 +64,8 @@ final class MonthViewModel: ObservableObject {
                 let day = Day(
                     dayDate,
                     isInMonth: Calendar.current.isDate(dayDate, equalTo: selectedDate, toGranularity: .month),
-                    isToday: Calendar.current.isDateInToday(dayDate)
+                    isToday: Calendar.current.isDateInToday(dayDate),
+                    helpText: relativeFormatter.localizedString(for: dayDate, relativeTo: Date())
                 )
                 tempDays.append(day)
 
@@ -120,8 +103,9 @@ extension MonthViewModel {
         var year: Int
         var isInMonth: Bool
         var isToday: Bool
+        var helpText: String
 
-        init(_ date: Date, isInMonth: Bool, isToday: Bool) {
+        init(_ date: Date, isInMonth: Bool, isToday: Bool, helpText: String) {
             self.date = date
             let comps = Calendar.current.dateComponents([.day, .month, .year], from: date)
             self.dayOfMonth = comps.day ?? 0
@@ -129,6 +113,7 @@ extension MonthViewModel {
             self.year = comps.year ?? 0
             self.isInMonth = isInMonth
             self.isToday = isToday
+            self.helpText = helpText
         }
     }
 }

@@ -61,10 +61,7 @@ struct MonthCalendar: View {
                                 .frame(maxWidth: .infinity)
                                 .foregroundColor(day.isInMonth ? day.isToday ? Color(nsColor: .windowBackgroundColor) : .primary : .secondary)
                                 .italic(!day.isInMonth)
-                                .help(viewModel.helpText)
-                                .onHover { over in
-                                    viewModel.onHover(over, date: day.date)
-                                }
+                                .help(day.helpText)
                         }
                     }
                 }
