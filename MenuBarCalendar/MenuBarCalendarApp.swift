@@ -13,8 +13,13 @@ struct MenuBarCalendarApp: App {
 
     @State private var observer: NSKeyValueObservation?
 
+    // Workaround for SwiftUI preview support.
+    private var isPreview: Bool {
+        ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
+    }
+
     var body: some Scene {
-        MenuBarExtra(content: {
+        MenuBarExtra(isInserted: .constant(!isPreview), content: {
             VStack(alignment: .leading) {
                 MonthCalendarView()
                     .environmentObject(context)

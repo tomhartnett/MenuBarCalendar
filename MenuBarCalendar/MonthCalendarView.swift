@@ -59,7 +59,7 @@ struct MonthCalendarView: View {
 
                             Text("\(day.dayOfMonth)")
                                 .frame(maxWidth: .infinity)
-                                .foregroundColor(day.isInMonth ? day.isToday ? Color(nsColor: .windowBackgroundColor) : .primary : .secondary)
+                                .foregroundColor(day.isToday ? Color(nsColor: .windowBackgroundColor) : day.isInMonth ? .primary : .secondary)
                                 .fontWeight(day.isInMonth ? .medium : .regular)
                                 .italic(!day.isInMonth)
                                 .help(day.helpText)
@@ -78,7 +78,11 @@ struct MonthCalendarView: View {
 
 struct MonthCalendar_Previews: PreviewProvider {
     static var previews: some View {
-        MonthCalendarView()
-            .frame(width: 300)
+        let context = AppContext()
+        context.today()
+
+        return MonthCalendarView()
+            .environmentObject(context)
+            .frame(width: 344)
     }
 }
