@@ -10,8 +10,6 @@ import SwiftUI
 struct TodayView: View {
     @EnvironmentObject var context: AppContext
 
-    @State private var isHoverOver = false
-
     var body: some View {
         HStack(spacing: 16) {
             Button("Today", action: {
@@ -19,15 +17,7 @@ struct TodayView: View {
             })
 
             Text(context.todayDisplayText)
-                .fontWeight(isHoverOver ? .medium : .regular)
                 .italic()
-        }
-        .contentShape(Rectangle())
-        .onHover { over in
-            isHoverOver = over
-        }
-        .onTapGesture {
-            context.today()
         }
     }
 }

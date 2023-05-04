@@ -36,7 +36,6 @@ struct MonthCalendarView: View {
                     Image(systemName: "chevron.right")
                 })
             }
-            .padding(.top)
 
             HStack {
                 ForEach(viewModel.headers) { header in

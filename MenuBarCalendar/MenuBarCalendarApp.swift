@@ -20,7 +20,7 @@ struct MenuBarCalendarApp: App {
 
     var body: some Scene {
         MenuBarExtra(isInserted: .constant(!isPreview), content: {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 8) {
                 MonthCalendarView()
                     .environmentObject(context)
 
@@ -35,7 +35,7 @@ struct MenuBarCalendarApp: App {
                     NSApplication.shared.terminate(nil)
                 }
             }
-            .padding([.horizontal, .bottom])
+            .padding(.all, 8)
             .onAppear {
                 // Workaround for `@Environment(\.scenePhase)` not working with `MenuBarExtra`.
                 observer = NSApplication.shared.observe(\.keyWindow) { _, _ in
