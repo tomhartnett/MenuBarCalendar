@@ -13,6 +13,8 @@
 		E22B519729F481960063AD8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E22B519629F481960063AD8A /* Assets.xcassets */; };
 		E22B519A29F481960063AD8A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E22B519929F481960063AD8A /* Preview Assets.xcassets */; };
 		E22B51A229F485E40063AD8A /* MonthCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B51A129F485E40063AD8A /* MonthCalendarView.swift */; };
+		E2537C4429FFECD40069F705 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2537C4329FFECD40069F705 /* AppDelegate.swift */; };
+		E2537C632A0063790069F705 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2537C622A0063790069F705 /* main.swift */; };
 		E2FAAE0329F954D20005D40A /* MonthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FAAE0229F954D20005D40A /* MonthViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +27,8 @@
 		E22B519929F481960063AD8A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E22B519B29F481960063AD8A /* MenuBarCalendar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MenuBarCalendar.entitlements; sourceTree = "<group>"; };
 		E22B51A129F485E40063AD8A /* MonthCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCalendarView.swift; sourceTree = "<group>"; };
+		E2537C4329FFECD40069F705 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E2537C622A0063790069F705 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		E2FAAE0229F954D20005D40A /* MonthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -59,6 +63,8 @@
 			isa = PBXGroup;
 			children = (
 				E224F9FC29FDA7040058D94F /* AppContext.swift */,
+				E2537C4329FFECD40069F705 /* AppDelegate.swift */,
+				E2537C622A0063790069F705 /* main.swift */,
 				E22B519229F481960063AD8A /* MenuBarCalendarApp.swift */,
 				E22B51A129F485E40063AD8A /* MonthCalendarView.swift */,
 				E2FAAE0229F954D20005D40A /* MonthViewModel.swift */,
@@ -148,6 +154,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2537C4429FFECD40069F705 /* AppDelegate.swift in Sources */,
+				E2537C632A0063790069F705 /* main.swift in Sources */,
 				E22B51A229F485E40063AD8A /* MonthCalendarView.swift in Sources */,
 				E224F9FD29FDA7040058D94F /* AppContext.swift in Sources */,
 				E2FAAE0329F954D20005D40A /* MonthViewModel.swift in Sources */,
@@ -288,6 +296,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -316,6 +325,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

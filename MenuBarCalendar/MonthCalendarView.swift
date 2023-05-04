@@ -36,7 +36,7 @@ struct MonthCalendarView: View {
                     Image(systemName: "chevron.right")
                 })
             }
-            .padding(.top)
+            .padding(.horizontal, 8)
 
             HStack {
                 ForEach(viewModel.headers) { header in
@@ -63,12 +63,14 @@ struct MonthCalendarView: View {
                                 .fontWeight(day.isInMonth ? .medium : .regular)
                                 .italic(!day.isInMonth)
                                 .help(day.helpText)
+                            #warning(".help doesn't work")
                         }
                     }
                 }
                 .frame(height: rowHeight)
             }
         }
+        .frame(idealHeight: 264)
         .onReceive(context.$selectedDate) { date in
             guard date != nil else { return }
             viewModel.selectedDate = date!

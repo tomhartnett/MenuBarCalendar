@@ -10,25 +10,18 @@ import SwiftUI
 struct TodayView: View {
     @EnvironmentObject var context: AppContext
 
-    @State private var isHoverOver = false
-
     var body: some View {
         HStack(spacing: 16) {
-            Button("Today", action: {
-                context.today()
-            })
-
             Text(context.todayDisplayText)
-                .fontWeight(isHoverOver ? .medium : .regular)
                 .italic()
+                .onTapGesture {
+                    #warning("tap gesture not working consistently")
+                    context.today()
+                }
         }
+        .frame(idealHeight: 22)
+        .background(Color.orange.opacity(0.5))
         .contentShape(Rectangle())
-        .onHover { over in
-            isHoverOver = over
-        }
-        .onTapGesture {
-            context.today()
-        }
     }
 }
 
