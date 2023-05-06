@@ -59,8 +59,8 @@ struct MonthCalendarView: View {
                             Text("\(day.dayOfMonth)")
                                 .frame(maxWidth: .infinity)
                                 .foregroundColor(day.isToday ? Color(nsColor: .windowBackgroundColor) : day.isInMonth ? .primary : .secondary)
-                                .fontWeight(day.isInMonth ? .medium : .regular)
                                 .italic(!day.isInMonth)
+                                .fontWeight(day.isInMonth ? .medium : .regular)
                                 .help(day.helpText)
                         }
                     }
