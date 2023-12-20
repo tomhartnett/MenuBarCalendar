@@ -38,38 +38,56 @@ final class MonthViewModel: ObservableObject {
 
     private var relativeFormatter: RelativeDateTimeFormatter = {
         let formatter = RelativeDateTimeFormatter()
+        formatter.dateTimeStyle = .named
         return formatter
     }()
 
     func changeMonth(_ increment: Int) {
-        let dateInterval = Calendar.current.dateInterval(of: .month, for: selectedDate)!
-        let newDate = Calendar.current.date(byAdding: .month, value: increment, to: dateInterval.start)!
+        let calendar = Calendar.autoupdatingCurrent
+        let dateInterval = calendar.dateInterval(of: .month, for: selectedDate)!
+        let newDate = calendar.date(byAdding: .month, value: increment, to: dateInterval.start)!
         selectedDate = newDate
     }
 
     private func computeMonth() {
         // TODO: avoid force-unwrapping of dates.
-        let monthInterval = Calendar.current.dateInterval(of: .month, for: selectedDate)!
-        let firstWeek = Calendar.current.dateInterval(of: .weekOfYear, for: monthInterval.start)!
-        let firstDayOfLastWeek = Calendar.current.date(byAdding: .weekOfYear, value: 5, to: firstWeek.start)!
-        let lastWeek = Calendar.current.dateInterval(of: .weekOfYear, for: firstDayOfLastWeek)!
+        let calendar = Calendar.autoupdatingCurrent
+        let monthInterval = calendar.dateInterval(of: .month, for: selectedDate)!
+        let firstWeek = calendar.dateInterval(of: .weekOfYear, for: monthInterval.start)!
+        let firstDayOfLastWeek = calendar.date(byAdding: .weekOfYear, value: 5, to: firstWeek.start)!
+        let lastWeek = calendar.dateInterval(of: .weekOfYear, for: firstDayOfLastWeek)!
 
         var loopDate = firstWeek.start
         var tempWeeks = [Week]()
         while loopDate < lastWeek.end {
-            let weekInterval = Calendar.current.dateInterval(of: .weekOfYear, for: loopDate)!
+            let weekInterval = calendar.dateInterval(of: .weekOfYear, for: loopDate)!
             var dayDate = weekInterval.start
             var tempDays = [Day]()
+            let now = Date()
             while dayDate < weekInterval.end {
+
+                let components = calendar.dateComponents(
+                    [.minute, .hour, .day],
+                    from: now,
+                    to: dayDate)
+
+                let helpText: String
+                if abs(dayDate.timeIntervalSince(now)) > 14 * 86_400 {
+                    helpText = relativeFormatter.localizedString(for: dayDate, relativeTo: now)
+                } else {
+                    helpText = relativeFormatter.localizedString(from: components)
+                }
+
                 let day = Day(
                     dayDate,
-                    isInMonth: Calendar.current.isDate(dayDate, equalTo: selectedDate, toGranularity: .month),
-                    isToday: Calendar.current.isDateInToday(dayDate),
-                    helpText: relativeFormatter.localizedString(for: dayDate, relativeTo: Date())
+                    isInMonth: calendar.isDate(dayDate, equalTo: selectedDate, toGranularity: .month),
+                    isToday: calendar.isDateInToday(dayDate),
+                    helpText: helpText
                 )
+                
                 tempDays.append(day)
 
-                dayDate = Calendar.current.date(byAdding: .day, value: 1, to: dayDate)!
+                dayDate = calendar.date(byAdding: .day, value: 1, to: dayDate)!
             }
 
             tempWeeks.append(Week(days: tempDays))
@@ -107,7 +125,7 @@ extension MonthViewModel {
 
         init(_ date: Date, isInMonth: Bool, isToday: Bool, helpText: String) {
             self.date = date
-            let comps = Calendar.current.dateComponents([.day, .month, .year], from: date)
+            let comps = Calendar.autoupdatingCurrent.dateComponents([.day, .month, .year], from: date)
             self.dayOfMonth = comps.day ?? 0
             self.month = comps.month ?? 0
             self.year = comps.year ?? 0
