@@ -50,12 +50,12 @@ final class MonthViewModel: ObservableObject {
     }
 
     private func computeMonth() {
-        // TODO: avoid force-unwrapping of dates.
         let calendar = Calendar.autoupdatingCurrent
         let monthInterval = calendar.dateInterval(of: .month, for: selectedDate)!
         let firstWeek = calendar.dateInterval(of: .weekOfYear, for: monthInterval.start)!
         let firstDayOfLastWeek = calendar.date(byAdding: .weekOfYear, value: 5, to: firstWeek.start)!
         let lastWeek = calendar.dateInterval(of: .weekOfYear, for: firstDayOfLastWeek)!
+        let today = calendar.startOfDay(for: Date())
 
         var loopDate = firstWeek.start
         var tempWeeks = [Week]()
@@ -63,20 +63,14 @@ final class MonthViewModel: ObservableObject {
             let weekInterval = calendar.dateInterval(of: .weekOfYear, for: loopDate)!
             var dayDate = weekInterval.start
             var tempDays = [Day]()
-            let now = Date()
             while dayDate < weekInterval.end {
 
                 let components = calendar.dateComponents(
                     [.minute, .hour, .day],
-                    from: now,
+                    from: today,
                     to: dayDate)
 
-                let helpText: String
-                if abs(dayDate.timeIntervalSince(now)) > 14 * 86_400 {
-                    helpText = relativeFormatter.localizedString(for: dayDate, relativeTo: now)
-                } else {
-                    helpText = relativeFormatter.localizedString(from: components)
-                }
+                let helpText = relativeFormatter.localizedString(for: dayDate, relativeTo: today)
 
                 let day = Day(
                     dayDate,
