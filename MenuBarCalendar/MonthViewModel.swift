@@ -65,11 +65,6 @@ final class MonthViewModel: ObservableObject {
             var tempDays = [Day]()
             while dayDate < weekInterval.end {
 
-                let components = calendar.dateComponents(
-                    [.minute, .hour, .day],
-                    from: today,
-                    to: dayDate)
-
                 let helpText = relativeFormatter.localizedString(for: dayDate, relativeTo: today)
 
                 let day = Day(
@@ -91,8 +86,10 @@ final class MonthViewModel: ObservableObject {
             loopDate = weekInterval.end
         }
 
-        title = titleFormatter.string(from: selectedDate)
-        weeks = tempWeeks
+        DispatchQueue.main.async { [unowned self] in
+            self.title = self.titleFormatter.string(from: self.selectedDate)
+            self.weeks = tempWeeks
+        }
     }
 }
 

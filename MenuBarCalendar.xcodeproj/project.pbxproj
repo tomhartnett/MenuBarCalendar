@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E20A53E02CA977AC0005C580 /* QuitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20A53DF2CA977A80005C580 /* QuitView.swift */; };
 		E224F9FB29FD8C120058D94F /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E224F9FA29FD8C120058D94F /* TodayView.swift */; };
 		E224F9FD29FDA7040058D94F /* AppContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E224F9FC29FDA7040058D94F /* AppContext.swift */; };
 		E22B519329F481960063AD8A /* MenuBarCalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B519229F481960063AD8A /* MenuBarCalendarApp.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E20A53DF2CA977A80005C580 /* QuitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuitView.swift; sourceTree = "<group>"; };
 		E224F9FA29FD8C120058D94F /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
 		E224F9FC29FDA7040058D94F /* AppContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContext.swift; sourceTree = "<group>"; };
 		E22B518F29F481960063AD8A /* MenuBarCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenuBarCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,6 +60,7 @@
 		E22B519129F481960063AD8A /* MenuBarCalendar */ = {
 			isa = PBXGroup;
 			children = (
+				E20A53DF2CA977A80005C580 /* QuitView.swift */,
 				E224F9FC29FDA7040058D94F /* AppContext.swift */,
 				E22B519229F481960063AD8A /* MenuBarCalendarApp.swift */,
 				E22B51A129F485E40063AD8A /* MonthCalendarView.swift */,
@@ -148,6 +151,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E20A53E02CA977AC0005C580 /* QuitView.swift in Sources */,
 				E22B51A229F485E40063AD8A /* MonthCalendarView.swift in Sources */,
 				E224F9FD29FDA7040058D94F /* AppContext.swift in Sources */,
 				E2FAAE0329F954D20005D40A /* MonthViewModel.swift in Sources */,

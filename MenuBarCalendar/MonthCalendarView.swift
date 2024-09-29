@@ -10,18 +10,25 @@ import SwiftUI
 struct MonthCalendarView: View {
     @EnvironmentObject var context: AppContext
 
-    @StateObject private var viewModel = MonthViewModel()
+    @EnvironmentObject var viewModel: MonthViewModel
 
     let rowHeight: CGFloat = 25
 
     var body: some View {
         VStack {
             HStack {
-                Button(action: {
-                    viewModel.changeMonth(-1)
-                }, label: {
+                HStack {
                     Image(systemName: "chevron.left")
-                })
+                        .font(.title)
+
+                    Spacer()
+                }
+                .frame(width: 22)
+                .contentShape(Rectangle())
+                .padding(.leading, 8)
+                .onTapGesture {
+                    viewModel.changeMonth(-1)
+                }
 
                 Spacer()
 
@@ -30,11 +37,18 @@ struct MonthCalendarView: View {
 
                 Spacer()
 
-                Button(action: {
-                    viewModel.changeMonth(1)
-                }, label: {
+                HStack {
+                    Spacer()
+
                     Image(systemName: "chevron.right")
-                })
+                        .font(.title)
+                }
+                .frame(width: 22)
+                .contentShape(Rectangle())
+                .padding(.trailing, 8)
+                .onTapGesture {
+                    viewModel.changeMonth(1)
+                }
             }
 
             HStack {
@@ -52,13 +66,14 @@ struct MonthCalendarView: View {
                         ZStack {
                             if day.isToday {
                                 Circle()
+                                    .foregroundStyle(Color.accentColor.opacity(0.75))
                             } else {
                                 EmptyView()
                             }
 
                             Text("\(day.dayOfMonth)")
                                 .frame(maxWidth: .infinity)
-                                .foregroundColor(day.isToday ? Color(nsColor: .windowBackgroundColor) : day.isInMonth ? .primary : .secondary)
+                                .foregroundStyle(computeForegroundColor(for: day))
                                 .italic(!day.isInMonth)
                                 .fontWeight(day.isInMonth ? .medium : .regular)
                                 .help(day.helpText)
@@ -71,6 +86,16 @@ struct MonthCalendarView: View {
         .onReceive(context.$selectedDate) { date in
             guard date != nil else { return }
             viewModel.selectedDate = date!
+        }
+    }
+
+    func computeForegroundColor(for day: MonthViewModel.Day) -> Color {
+        if day.isToday {
+            return Color(nsColor: .windowBackgroundColor)
+        } else if day.isInMonth {
+            return Color.primary
+        } else {
+            return Color.secondary
         }
     }
 }

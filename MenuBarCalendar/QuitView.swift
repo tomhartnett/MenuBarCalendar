@@ -1,20 +1,18 @@
 //
-//  TodayView.swift
+//  QuitView.swift
 //  MenuBarCalendar
 //
-//  Created by Tom Hartnett on 4/29/23.
+//  Created by Tom Hartnett on 9/29/24.
 //
 
 import SwiftUI
 
-struct TodayView: View {
-    @EnvironmentObject var context: AppContext
-
+struct QuitView: View {
     @State private var isMouseOver: Bool = false
 
     var body: some View {
-        HStack(spacing: 16) {
-            Text(context.todayDisplayText)
+        HStack {
+            Text("Quit")
                 .foregroundStyle(isMouseOver ? Color.white : Color.primary)
                 .padding(.leading, 8)
 
@@ -27,14 +25,7 @@ struct TodayView: View {
             isMouseOver = isOver
         }
         .onTapGesture {
-            context.today()
-            isMouseOver = false
+            NSApplication.shared.terminate(nil)
         }
-    }
-}
-
-struct TodayView_Previews: PreviewProvider {
-    static var previews: some View {
-        TodayView()
     }
 }

@@ -11,6 +11,8 @@ import SwiftUI
 struct MenuBarCalendarApp: App {
     @StateObject var context = AppContext()
 
+    @StateObject var monthViewModel = MonthViewModel()
+
     @State private var observer: NSKeyValueObservation?
 
     // Workaround for SwiftUI preview support.
@@ -23,6 +25,7 @@ struct MenuBarCalendarApp: App {
             VStack(alignment: .leading, spacing: 8) {
                 MonthCalendarView()
                     .environmentObject(context)
+                    .environmentObject(monthViewModel)
 
                 Divider()
 
@@ -31,18 +34,23 @@ struct MenuBarCalendarApp: App {
 
                 Divider()
 
-                Button("Quit") {
-                    NSApplication.shared.terminate(nil)
-                }
+                QuitView()
             }
             .padding(.all, 8)
             .onAppear {
+                // TODO: revisit below workarounds as new versions of Xcode are released.
+
                 // Workaround for `@Environment(\.scenePhase)` not working with `MenuBarExtra`.
                 observer = NSApplication.shared.observe(\.keyWindow) { _, _ in
                     if NSApplication.shared.keyWindow != nil {
                         context.today()
                     }
                 }
+
+                // Workaround for issue where MonthCalendarView does not render on first appearance of view.
+                // Started when compiled with Xcode 16.0.
+                monthViewModel.changeMonth(0)
+                context.today()
             }
 
         }, label: {
