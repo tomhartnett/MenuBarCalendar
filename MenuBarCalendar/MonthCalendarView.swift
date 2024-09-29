@@ -66,6 +66,7 @@ struct MonthCalendarView: View {
                         ZStack {
                             if day.isToday {
                                 Circle()
+                                    .frame(width: 30, height: 30)
                                     .foregroundStyle(Color.accentColor.opacity(0.75))
                             } else {
                                 EmptyView()
@@ -91,7 +92,7 @@ struct MonthCalendarView: View {
 
     func computeForegroundColor(for day: MonthViewModel.Day) -> Color {
         if day.isToday {
-            return Color(nsColor: .windowBackgroundColor)
+            return Color(nsColor: .white)
         } else if day.isInMonth {
             return Color.primary
         } else {
