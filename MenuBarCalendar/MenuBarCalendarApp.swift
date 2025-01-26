@@ -54,7 +54,7 @@ struct MenuBarCalendarApp: App {
             }
 
         }, label: {
-            Image(systemName: "calendar.badge.clock")
+            Image(.customCalendarBadgeArrowDown)
         })
         .menuBarExtraStyle(.window)
     }
