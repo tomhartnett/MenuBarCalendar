@@ -53,7 +53,7 @@ final class MonthViewModel: ObservableObject {
     }
 
     private func computeHeaders() {
-        let calendar = Calendar.current
+        let calendar = Calendar.autoupdatingCurrent
         let firstWeekday = calendar.firstWeekday - 1
         let symbols = calendar.shortWeekdaySymbols
 
