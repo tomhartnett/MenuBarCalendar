@@ -12,15 +12,7 @@ final class MonthViewModel: ObservableObject {
     @Published var title = ""
     @Published var weeks = [Week]()
 
-    let headers: [Header] = [
-        .init(daySymbol: "Sun"),
-        .init(daySymbol: "Mon"),
-        .init(daySymbol: "Tue"),
-        .init(daySymbol: "Wed"),
-        .init(daySymbol: "Thu"),
-        .init(daySymbol: "Fri"),
-        .init(daySymbol: "Sat"),
-    ]
+    var headers: [Header] = []
 
     var selectedDate = Date() {
         didSet {
@@ -29,6 +21,17 @@ final class MonthViewModel: ObservableObject {
             }
         }
     }
+
+    init() {
+        computeHeaders()
+        startObserving()
+    }
+
+    deinit {
+        stopObserving()
+    }
+
+    private var observer: NSObjectProtocol?
 
     private var titleFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -47,6 +50,15 @@ final class MonthViewModel: ObservableObject {
         let dateInterval = calendar.dateInterval(of: .month, for: selectedDate)!
         let newDate = calendar.date(byAdding: .month, value: increment, to: dateInterval.start)!
         selectedDate = newDate
+    }
+
+    private func computeHeaders() {
+        let calendar = Calendar.current
+        let firstWeekday = calendar.firstWeekday - 1
+        let symbols = calendar.shortWeekdaySymbols
+
+        let reorderedDays = symbols.suffix(from: firstWeekday) + symbols.prefix(firstWeekday)
+        headers = reorderedDays.map { Header(daySymbol: $0) }
     }
 
     private func computeMonth() {
@@ -89,6 +101,22 @@ final class MonthViewModel: ObservableObject {
         DispatchQueue.main.async { [unowned self] in
             self.title = self.titleFormatter.string(from: self.selectedDate)
             self.weeks = tempWeeks
+        }
+    }
+
+    private func startObserving() {
+        observer = NotificationCenter.default.addObserver(
+            forName: NSLocale.currentLocaleDidChangeNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.computeHeaders()
+        }
+    }
+
+    private func stopObserving() {
+        if let observer {
+            NotificationCenter.default.removeObserver(observer)
         }
     }
 }
