@@ -85,8 +85,10 @@ struct MonthCalendarView: View {
             }
         }
         .onReceive(context.$selectedDate) { date in
-            guard date != nil else { return }
-            viewModel.selectedDate = date!
+            // TODO: this causes month to be computed twice when navigating forward/backward
+            // (once for the button click on the chevron and once here).
+            guard let date else { return }
+            viewModel.selectedDate = date
         }
     }
 

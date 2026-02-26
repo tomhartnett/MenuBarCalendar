@@ -65,8 +65,7 @@ final class MonthViewModel: ObservableObject {
         let calendar = Calendar.autoupdatingCurrent
         let monthInterval = calendar.dateInterval(of: .month, for: selectedDate)!
         let firstWeek = calendar.dateInterval(of: .weekOfYear, for: monthInterval.start)!
-        let firstDayOfLastWeek = calendar.date(byAdding: .weekOfYear, value: 5, to: firstWeek.start)!
-        let lastWeek = calendar.dateInterval(of: .weekOfYear, for: firstDayOfLastWeek)!
+        let lastWeek = calendar.dateInterval(of: .weekOfYear, for: monthInterval.end.addingTimeInterval(-1))!
         let today = calendar.startOfDay(for: Date())
 
         var loopDate = firstWeek.start
