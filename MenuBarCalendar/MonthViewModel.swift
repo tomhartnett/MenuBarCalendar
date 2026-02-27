@@ -64,9 +64,36 @@ final class MonthViewModel: ObservableObject {
     private func computeMonth() {
         let calendar = Calendar.autoupdatingCurrent
         let monthInterval = calendar.dateInterval(of: .month, for: selectedDate)!
-        let firstWeek = calendar.dateInterval(of: .weekOfYear, for: monthInterval.start)!
-        let lastWeek = calendar.dateInterval(of: .weekOfYear, for: monthInterval.end.addingTimeInterval(-1))!
         let today = calendar.startOfDay(for: Date())
+
+        let lastWeekdayOfCalendar: Int
+        if calendar.firstWeekday == 1 {
+            // If first weekday is Sunday, then last weekday is Saturday (7).
+            lastWeekdayOfCalendar = 7
+        } else {
+            // If first weekday is not Sunday, then last weekday is calendar.firstWeekday - 1. Strange but true.
+            lastWeekdayOfCalendar = calendar.firstWeekday - 1
+        }
+
+        // Determine the first week to show for the month. It will include some days from the previous month.
+        var firstWeek = calendar.dateInterval(of: .weekOfYear, for: monthInterval.start)!
+        let firstWeekdayOfMonth = calendar.dateComponents([.weekday], from: firstWeek.start).weekday!
+        let firstWeekdayIsInMonth = calendar.isDate(firstWeek.start, equalTo: selectedDate, toGranularity: .month)
+        if firstWeekdayIsInMonth && firstWeekdayOfMonth == calendar.firstWeekday {
+            // If the first day of month is also first day of week, then show previous week for "padding".
+            // Adding -1 seconds will get dateInterval of the previous week.
+            firstWeek = calendar.dateInterval(of: .weekOfYear, for: firstWeek.start.addingTimeInterval(-1))!
+        }
+
+        // Determine the last week to show for the month. It will include some days from the next month.
+        var lastWeek = calendar.dateInterval(of: .weekOfYear, for: monthInterval.end.addingTimeInterval(-1))!
+        let lastWeekdayOfMonth = calendar.dateComponents([.weekday], from: lastWeek.end.addingTimeInterval(-1)).weekday!
+        let lastWeekdayIsInMonth = calendar.isDate(lastWeek.end.addingTimeInterval(-1), equalTo: selectedDate, toGranularity: .month)
+        if lastWeekdayIsInMonth && lastWeekdayOfMonth == lastWeekdayOfCalendar {
+            // If last day of month is also last day of week, then show an extra row of dates for "padding".
+            // lastWeek.end is exclusive upper bound, so it will get dateInterval of the following week.
+            lastWeek = calendar.dateInterval(of: .weekOfYear, for: lastWeek.end)!
+        }
 
         var loopDate = firstWeek.start
         var tempWeeks = [Week]()
