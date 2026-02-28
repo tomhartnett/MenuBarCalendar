@@ -85,9 +85,6 @@ struct MonthCalendarView: View {
             }
         }
         .onReceive(context.$selectedDate) { date in
-            // TODO: this causes month to be computed twice when navigating forward/backward
-            // (once for the button click on the chevron and once here).
-            guard let date else { return }
             viewModel.selectedDate = date
         }
     }
@@ -103,13 +100,13 @@ struct MonthCalendarView: View {
     }
 }
 
-struct MonthCalendar_Previews: PreviewProvider {
-    static var previews: some View {
-        let context = AppContext()
-        context.today()
+#Preview {
+    let today = Calendar.autoupdatingCurrent.startOfDay(for: Date())
+    let context = AppContext(date: today)
+    let viewModel = MonthViewModel(date: today)
 
-        return MonthCalendarView()
-            .environmentObject(context)
-            .frame(width: 344)
-    }
+    return MonthCalendarView()
+        .environmentObject(context)
+        .environmentObject(viewModel)
+        .frame(width: 300, height: 300)
 }

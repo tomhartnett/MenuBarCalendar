@@ -14,7 +14,7 @@ final class MonthViewModel: ObservableObject {
 
     var headers: [Header] = []
 
-    var selectedDate = Date() {
+    var selectedDate: Date {
         didSet {
             if selectedDate != oldValue {
                 computeMonth()
@@ -22,8 +22,10 @@ final class MonthViewModel: ObservableObject {
         }
     }
 
-    init() {
+    init(date: Date) {
+        selectedDate = date
         computeHeaders()
+        computeMonth()
         startObserving()
     }
 

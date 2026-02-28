@@ -8,18 +8,13 @@
 import Foundation
 
 class AppContext: ObservableObject {
-    @Published private(set) var selectedDate: Date?
-    @Published private(set) var todayDisplayText = ""
+    @Published private(set) var selectedDate: Date
 
-    private var todayFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .full
-        return formatter
-    }()
+    init(date: Date) {
+        selectedDate = date
+    }
 
     func today() {
-        let now = Date()
-        selectedDate = now
-        todayDisplayText = todayFormatter.string(from: now)
+        selectedDate = Calendar.autoupdatingCurrent.startOfDay(for: Date())
     }
 }

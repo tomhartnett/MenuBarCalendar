@@ -9,15 +9,14 @@ import SwiftUI
 
 @main
 struct MenuBarCalendarApp: App {
-    @StateObject var context = AppContext()
+    @StateObject var context: AppContext
 
-    @StateObject var monthViewModel = MonthViewModel()
+    @StateObject var monthViewModel: MonthViewModel
 
-    @State private var observer: NSKeyValueObservation?
-
-    // Workaround for SwiftUI preview support.
-    private var isPreview: Bool {
-        ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
+    init() {
+        let today = Calendar.autoupdatingCurrent.startOfDay(for: Date())
+        _context = StateObject(wrappedValue: AppContext(date: today))
+        _monthViewModel = StateObject(wrappedValue: MonthViewModel(date: today))
     }
 
     var body: some Scene {
@@ -37,19 +36,11 @@ struct MenuBarCalendarApp: App {
                 QuitView()
             }
             .padding(.all, 8)
-            .onAppear {
-                // TODO: revisit below workarounds as new versions of Xcode are released.
-
-                // Workaround for `@Environment(\.scenePhase)` not working with `MenuBarExtra`.
-                observer = NSApplication.shared.observe(\.keyWindow) { _, _ in
-                    if NSApplication.shared.keyWindow != nil {
-                        context.today()
-                    }
-                }
-
-                // Workaround for issue where MonthCalendarView does not render on first appearance of view.
-                // Started when compiled with Xcode 16.0.
-                monthViewModel.changeMonth(0)
+            .task {
+                context.today()
+            }
+            .onDisappear {
+                // Reduces "flicker" when showing calendar again after navigating away from current month.
                 context.today()
             }
 
@@ -57,5 +48,10 @@ struct MenuBarCalendarApp: App {
             Image(.customCalendarBadgeArrowDown)
         })
         .menuBarExtraStyle(.window)
+    }
+
+    // Workaround for SwiftUI preview support.
+    private var isPreview: Bool {
+        ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
     }
 }

@@ -14,7 +14,7 @@ struct TodayView: View {
 
     var body: some View {
         HStack(spacing: 16) {
-            Text(context.todayDisplayText)
+            Text(context.selectedDate, format: Date.FormatStyle(date: .complete, time: .omitted).attributedStyle)
                 .foregroundStyle(isMouseOver ? Color.white : Color.primary)
                 .padding(.leading, 8)
 
