@@ -63,22 +63,7 @@ struct MonthCalendarView: View {
             ForEach(viewModel.weeks) { week in
                 HStack {
                     ForEach(week.days) { day in
-                        ZStack {
-                            if day.isToday {
-                                Circle()
-                                    .frame(width: 30, height: 30)
-                                    .foregroundStyle(Color.accentColor.opacity(0.75))
-                            } else {
-                                EmptyView()
-                            }
-
-                            Text("\(day.dayOfMonth)")
-                                .frame(maxWidth: .infinity)
-                                .foregroundStyle(computeForegroundColor(for: day))
-                                .italic(!day.isInMonth)
-                                .fontWeight(day.isInMonth ? .medium : .regular)
-                                .help(day.helpText)
-                        }
+                        DayView(day: day)
                     }
                 }
                 .frame(height: rowHeight)
@@ -86,16 +71,6 @@ struct MonthCalendarView: View {
         }
         .onReceive(context.$selectedDate) { date in
             viewModel.selectedDate = date
-        }
-    }
-
-    func computeForegroundColor(for day: MonthViewModel.Day) -> Color {
-        if day.isToday {
-            return Color(nsColor: .white)
-        } else if day.isInMonth {
-            return Color.primary
-        } else {
-            return Color.secondary
         }
     }
 }
